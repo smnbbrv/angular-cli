@@ -240,8 +240,10 @@ export function getNpmPackageJson(
             auth.token = authToken;
           } else if (token) {
             try {
-              // attempt to parse username and password from base64 token; enable Artifactory / Nexus-like repositories support
-              const [extractedUsername, extractedPassword] = Buffer.from(token, 'base64').toString('ascii').split(':');
+              // attempt to parse username and password from base64 token
+              // to enable Artifactory / Nexus-like repositories support
+              const parsedToken = Buffer.from(token, 'base64').toString('ascii');
+              const [extractedUsername, extractedPassword] = parsedToken.split(':');
 
               if (extractedUsername && extractedPassword) {
                 auth.username = extractedUsername;
